@@ -1,23 +1,23 @@
 const newFormHandler = async (event) => {
   event.preventDefault();
-
-  const name = document.querySelector('#project-name').value.trim();
-  const needed_funding = document.querySelector('#project-funding').value.trim();
-  const description = document.querySelector('#project-desc').value.trim();
-
-  if (name && needed_funding && description) {
-    const response = await fetch(`/api/projects`, {
+  console.log('test');
+  const name = document.querySelector('#blog-name').value.trim();
+  const description = document.querySelector('#description').value.trim();
+  console.log('POST', name, description);
+  if (name && description) {
+    console.log(name, description);
+    const response = await fetch(`/api/blogs`, {
       method: 'POST',
-      body: JSON.stringify({ name, needed_funding, description }),
+      body: JSON.stringify({ blog_name: name, description }),
       headers: {
         'Content-Type': 'application/json',
       },
     });
 
     if (response.ok) {
-      document.location.replace('/profile');
+      //  document.location.replace('/profile');
     } else {
-      alert('Failed to create project');
+      alert('Failed to create blog');
     }
   }
 };
@@ -26,22 +26,23 @@ const delButtonHandler = async (event) => {
   if (event.target.hasAttribute('data-id')) {
     const id = event.target.getAttribute('data-id');
 
-    const response = await fetch(`/api/projects/${id}`, {
+    const response = await fetch(`/api/blogs/${id}`, {
       method: 'DELETE',
     });
 
     if (response.ok) {
       document.location.replace('/profile');
     } else {
-      alert('Failed to delete project');
+      alert('Failed to delete blog');
     }
   }
 };
 
 document
-  .querySelector('.new-project-form')
-  .addEventListener('submit', newFormHandler);
+  .querySelector('#create-post')
+  .addEventListener('click', newFormHandler);
 
-document
-  .querySelector('.project-list')
-  .addEventListener('click', delButtonHandler);
+// document
+//   .querySelector('.blog-list')
+//   .addEventListener('click', delButtonHandler);
+console.log('JS');

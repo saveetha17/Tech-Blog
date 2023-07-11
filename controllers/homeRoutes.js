@@ -1,21 +1,14 @@
 const router = require('express').Router();
-const { Blog, User } = require('../models');
+const { Blog, User, Comment } = require('../models');
 const withAuth = require('../utils/auth');
 
 router.get('/', async (req, res) => {
   try {
-    const blogData = await Blog.findAll({
-      include: [
-        {
-          model: User,
-          attributes: ['name', 'description'],
-        },
-      ],
-    });
+    const blogData = await Blog.findAll({});
 
     // Serialize data so the template can read it
     const blogs = blogData.map((blog) => blog.get({ plain: true }));
-    console.log(blogs);
+    //console.log(blogs);
     // Pass serialized data and session flag into template
     res.render('homepage', {
       blogs,
@@ -38,7 +31,7 @@ router.get('/blog/:id', async (req, res) => {
       ],
     });
 
-    const blog = blogDataData.get({ plain: true });
+    const blog = blogData.get({ plain: true });
 
     res.render('blog', {
       ...blog,
@@ -53,7 +46,10 @@ router.get('/profile', withAuth, async (req, res) => {
   try {
     const userData = await User.findByPk(req.session.user_id, {
       attributes: { exclude: ['password'] },
-      include: [{ model: Blog }],
+      include: [{
+         model: Blog ,
+         include: [{model: User}]
+        }],
     });
 
     const user = userData.get({ plain: true });
@@ -74,6 +70,15 @@ router.get('/login', (req, res) => {
   }
 
   res.render('login');
+});
+
+router.get('/signup', (req, res) => {
+  if (req.session.logged_in) {
+    res.redirect('/profile');
+    return;
+  }
+
+  res.render('signup');
 });
 
 module.exports = router;

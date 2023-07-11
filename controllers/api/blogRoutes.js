@@ -3,6 +3,7 @@ const { Blog } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 router.post('/', withAuth, async (req, res) => {
+  console.log(req.body,"Create POST")
   try {
     const newBlog = await Blog.create({
       ...req.body,
@@ -11,13 +12,14 @@ router.post('/', withAuth, async (req, res) => {
 
     res.status(200).json(newBlog);
   } catch (err) {
+    console.log("Err in POST",err)
     res.status(400).json(err);
   }
 });
 
 router.put('/:id', withAuth, async (req, res) => {
   try {
-    const newBlog = await Blog.create({
+    const newBlog = await Blog.update({
       ...req.body,
       user_id: req.session.user_id,
     });
@@ -27,7 +29,6 @@ router.put('/:id', withAuth, async (req, res) => {
     res.status(400).json(err);
   }
 });
-
 
 router.delete('/:id', withAuth, async (req, res) => {
   try {
