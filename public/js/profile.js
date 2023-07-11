@@ -1,7 +1,7 @@
 const newFormHandler = async (event) => {
   event.preventDefault();
   console.log('test');
-  const name = document.querySelector('#blog-name').value.trim();
+  const name = document.querySelector('#blog_name').value.trim();
   const description = document.querySelector('#description').value.trim();
   console.log('POST', name, description);
   if (name && description) {
@@ -15,7 +15,7 @@ const newFormHandler = async (event) => {
     });
 
     if (response.ok) {
-      //  document.location.replace('/profile');
+      document.location.replace('/profile');
     } else {
       alert('Failed to create blog');
     }

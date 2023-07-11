@@ -36,6 +36,7 @@ router.get('/blog/:id', async (req, res) => {
     res.render('blog', {
       ...blog,
       logged_in: req.session.logged_in,
+      user_name: req.session.user_name,
     });
   } catch (err) {
     res.status(500).json(err);
@@ -46,17 +47,20 @@ router.get('/profile', withAuth, async (req, res) => {
   try {
     const userData = await User.findByPk(req.session.user_id, {
       attributes: { exclude: ['password'] },
-      include: [{
-         model: Blog ,
-         include: [{model: User}]
-        }],
+      include: [
+        {
+          model: Blog,
+          include: [{ model: User }],
+        },
+      ],
     });
 
     const user = userData.get({ plain: true });
 
     res.render('profile', {
       ...user,
-      logged_in: true,
+      logged_in: req.session.logged_in,
+      user_name: req.session.user_name,
     });
   } catch (err) {
     res.status(500).json(err);
