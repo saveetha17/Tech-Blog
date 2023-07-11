@@ -26,19 +26,22 @@ router.get('/blog/:id', async (req, res) => {
       include: [
         {
           model: User,
-          attributes: ['name', 'description'],
+        },
+        {
+          model: Comment,
         },
       ],
     });
 
     const blog = blogData.get({ plain: true });
-
+    console.log('Blog', blog);
     res.render('blog', {
       ...blog,
       logged_in: req.session.logged_in,
       user_name: req.session.user_name,
     });
   } catch (err) {
+    console.log(err, 'error loading the blog');
     res.status(500).json(err);
   }
 });
