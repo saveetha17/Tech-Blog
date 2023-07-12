@@ -20,3 +20,5 @@ Tech Blog is a web application designed to allow developers to publish and share
 ## Link to Deployed Application
 
 ## Link to Github Repository
+
+https://github.com/saveetha17/Tech-Blog.git
