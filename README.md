@@ -15,9 +15,12 @@ Tech Blog is a web application designed to allow developers to publish and share
 
 ## Usage
 
-![ScreenShot]()
+![ScreenShot](./assets/techBlog.png)
+
+![ScreenShot](./assets/techBlog1.png)
 
 ## Link to Deployed Application
+https://ancient-castle-12283-e36f6fcd4812.herokuapp.com/ 
 
 ## Link to Github Repository
 
